@@ -1,6 +1,7 @@
 #include "tee.h"
 
 #include <fstream>
+#include <stdexcept>
 
 Tee::Tee(const std::filesystem::path& file_path, bool is_append_mode) :
     file_path_{file_path}
