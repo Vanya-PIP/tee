@@ -14,7 +14,7 @@ public:
 
     static void usage()
     {
-        std::cout << "Usage: tee [-a] <file_name>" << std::endl;
+        std::cout << "Usage: tee [-a] filename" << std::endl;
     };
 
 private:
