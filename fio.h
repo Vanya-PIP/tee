@@ -12,6 +12,18 @@
 namespace custom
 {
     /**
+     * @brief File stream open modes
+     */
+    namespace openmode
+    {
+        static constexpr int app      {O_APPEND};
+        static constexpr int in_only  {O_RDONLY};
+        static constexpr int out_only {O_WRONLY};
+        static constexpr int in_out   {O_RDWR  };
+        static constexpr int trunc    {O_TRUNC };
+    }
+
+    /**
      * @brief Custom file output stream which wraps Linux output system calls
      */
     class FOStream : public OStream
@@ -23,19 +35,19 @@ namespace custom
          * @brief Construct a new FOStream object and open it
          * 
          * @param pathname Path to file
-         * @param flags    Specifies stream open mode
+         * @param openmode    Specifies stream open mode
          */
-        FOStream(const std::string& pathname, int flags = default_flags_)
+        FOStream(const std::string& pathname, int openmode = 0)
         {
-            open(pathname, flags);
+            open(pathname, openmode);
         }
-        FOStream(const std::filesystem::path& path, int flags = default_flags_)
+        FOStream(const std::filesystem::path& path, int openmode = 0)
         {
-            open(path, flags);
+            open(path, openmode);
         }
-        FOStream(const char* pathname, int flags = default_flags_)
+        FOStream(const char* pathname, int openmode = 0)
         {
-            open(pathname, flags);
+            open(pathname, openmode);
         }
         ~FOStream()
         {
@@ -51,16 +63,16 @@ namespace custom
          * @brief Open or create a file for writing
          * 
          * @param pathname Path to file
-         * @param flags    Specifies stream open mode
+         * @param openmode    Specifies stream open mode
          */
-        void open(const std::string& pathname, int flags = default_flags_);
-        void open(const std::filesystem::path& path, int flags = default_flags_)
+        void open(const std::string& pathname, int openmode = 0);
+        void open(const std::filesystem::path& path, int openmode = 0)
         {
-            open(path.string(), flags);
+            open(path.string(), openmode);
         }
-        void open(const char* pathname, int flags = default_flags_)
+        void open(const char* pathname, int openmode = 0)
         {
-            open(std::string(pathname), flags);
+            open(std::string(pathname), openmode);
         }
 
         void close();
@@ -72,7 +84,7 @@ namespace custom
         bool is_open_ {false};
 
     private:
-        static constexpr int default_flags_ {O_WRONLY | O_CREAT | O_TRUNC | O_SYNC};
+        static constexpr int default_openmode_ {openmode::out_only | O_CREAT | O_SYNC};
     };
 
 } // namespace custom
