@@ -30,14 +30,24 @@ namespace custom
         IStream& get(char& c);
 
         /**
-         * @brief Extract one line from the stream
+         * @brief Extract characters from an input stream to the string until delimiter
          * 
          * @param[out] str The string in which to store data
          * @return *this
          * 
-         * Saves characters to string excluding the end of line ('\\n') character
+         * Extracts characters to string until delimiter character is reached.
+         * The delimiter character is extracted, but is not appended to string.
+         * The default delimiter is the endline ('\\n') character.
          */
-        IStream& getline(std::string& str);
+        IStream& getline(std::string& str, char delim = endl);
+
+        /**
+         * @brief Extract characters from an input stream to the string until EOF
+         * 
+         * @param[out] str The string in which to store data
+         * @return *this
+         */
+        IStream& read_all(std::string& str);
 
         IStream& operator>>(char& c)          {return get(c);}
         IStream& operator>>(std::string& str) {return getline(str);}
