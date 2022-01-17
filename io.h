@@ -19,6 +19,7 @@ namespace custom
     class IStream
     {
     public:
+        IStream(int fd = STDIN_FILENO) : fd_{fd} {}
         virtual ~IStream() = default;
 
         /**
@@ -58,7 +59,7 @@ namespace custom
         constexpr operator bool() const {return !is_eof_;}
 
     protected:
-        int fd_      {STDIN_FILENO}; // File descriptor
+        int fd_; // File descriptor
         bool is_eof_ {false};
     };
 
@@ -68,6 +69,7 @@ namespace custom
     class OStream
     {
     public:
+        OStream(int fd = STDOUT_FILENO) : fd_{fd} {}
         virtual ~OStream() = default;
 
         /**
@@ -92,11 +94,21 @@ namespace custom
         OStream& operator<<(const char* str)        {return write(str);}
 
     protected:
-        int fd_ {STDOUT_FILENO}; // File descriptor
+        int fd_; // File descriptor
     };
 
-    extern IStream in;  // Custom stream object linked to standard input
-    extern OStream out; // Custom stream object linked to standard output
+    /**
+     * @brief Custom error output stream which wraps Linux output system calls
+     */
+    class ErrStream : public OStream
+    {
+    public:
+        ErrStream(int fd = STDERR_FILENO) : OStream(fd) {}
+    };
+
+    extern IStream in;    // Custom stream object linked to standard input
+    extern OStream out;   // Custom stream object linked to standard output
+    extern ErrStream err; // Custom stream object linked to standard error output
 
 } // namespace custom
 

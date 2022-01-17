@@ -9,6 +9,7 @@ namespace custom
 
 IStream in;
 OStream out;
+ErrStream err;
 
 // ===========IStream===========
 
