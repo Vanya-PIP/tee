@@ -4,6 +4,7 @@ project(tee)
 set(SOURCE_FILES
     "main.cpp"
     "io.cpp"
+    "fio.cpp"
     "tee.cpp"
 )
 

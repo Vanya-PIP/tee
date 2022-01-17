@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <stdexcept>
 
-#include "io.h"
+#include "fio.h"
 #include "tee.h"
 
 int main(int argc, char *argv[])

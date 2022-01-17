@@ -50,13 +50,13 @@ namespace custom
          */
         IStream& read_all(std::string& str);
 
-        IStream& operator>>(char& c)          {return get(c);}
-        IStream& operator>>(std::string& str) {return getline(str);}
+        IStream& operator>>(char& c)          { return get(c); }
+        IStream& operator>>(std::string& str) { return getline(str); }
 
         /**
          * @return true if EOF is not reached, false otherwise
          */
-        constexpr operator bool() const {return !is_eof_;}
+        constexpr operator bool() const { return !is_eof_; }
 
     protected:
         int fd_; // File descriptor
@@ -78,7 +78,7 @@ namespace custom
          * @param[in] c The character to insert
          * @return *this
          */
-        virtual OStream& put(char c);
+        OStream& put(char c);
 
         /**
          * @brief Insert string into the stream
@@ -86,12 +86,12 @@ namespace custom
          * @param[in] str The string to insert
          * @return *this
          */
-        virtual OStream& write(const std::string& str);
-        OStream& write(const char* str) {return write(std::string(str));}
+        OStream& write(const std::string& str);
+        OStream& write(const char* str) { return write(std::string(str)); }
 
-        OStream& operator<<(char c)                 {return put(c);}
-        OStream& operator<<(const std::string& str) {return write(str);}
-        OStream& operator<<(const char* str)        {return write(str);}
+        OStream& operator<<(char c)                 { return put(c); }
+        OStream& operator<<(const std::string& str) { return write(str); }
+        OStream& operator<<(const char* str)        { return write(str); }
 
     protected:
         int fd_; // File descriptor
