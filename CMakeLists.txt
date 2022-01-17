@@ -5,7 +5,6 @@ set(SOURCE_FILES
     "main.cpp"
     "io.cpp"
     "fio.cpp"
-    "tee.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

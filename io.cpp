@@ -11,6 +11,7 @@ IStream in;
 OStream out;
 ErrStream err;
 
+
 // ===========IStream===========
 
 IStream& IStream::get(char& c)
@@ -90,6 +91,7 @@ IStream& IStream::read_all(std::string& str)
 
     return *this;
 }
+
 
 // ===========OStream===========
 

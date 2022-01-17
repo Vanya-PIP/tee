@@ -13,6 +13,7 @@ namespace custom
 {
     constexpr char endl {'\n'};
 
+
     /**
      * @brief Custom input stream which wraps Linux input system calls
      */
@@ -63,6 +64,7 @@ namespace custom
         bool is_eof_ {false};
     };
 
+
     /**
      * @brief Custom output stream which wraps Linux output system calls
      */
@@ -97,6 +99,7 @@ namespace custom
         int fd_; // File descriptor
     };
 
+
     /**
      * @brief Custom error output stream which wraps Linux output system calls
      */
@@ -105,6 +108,7 @@ namespace custom
     public:
         ErrStream(int fd = STDERR_FILENO) : OStream(fd) {}
     };
+
 
     extern IStream in;    // Custom stream object linked to standard input
     extern OStream out;   // Custom stream object linked to standard output

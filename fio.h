@@ -34,8 +34,8 @@ namespace custom
         /**
          * @brief Construct a new FOStream object and open it
          * 
-         * @param pathname Path to file
-         * @param openmode    Specifies stream open mode
+         * @param[in] pathname Path to file
+         * @param[in] openmode Specifies stream open mode
          */
         FOStream(const std::string& pathname, int openmode = 0)
         {
@@ -62,8 +62,8 @@ namespace custom
         /**
          * @brief Open or create a file for writing
          * 
-         * @param pathname Path to file
-         * @param openmode    Specifies stream open mode
+         * @param[in] pathname Path to file
+         * @param[in] openmode    Specifies stream open mode
          */
         void open(const std::string& pathname, int openmode = 0);
         void open(const std::filesystem::path& path, int openmode = 0)
