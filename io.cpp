@@ -4,24 +4,24 @@
 #include <stdexcept>
 #include <cerrno>
 
-// POSIX
-#include <unistd.h>
-
 namespace custom
 {
 
 IStream in;
+OStream out;
+
+// ===========IStream===========
 
 IStream& IStream::get(char& c)
 {
     is_eof_ = false;
 
-    ssize_t num_of_bytes {read(fd_, &c, 1)};
+    ssize_t num_of_bytes {::read(fd_, &c, 1)};
 
     if (num_of_bytes == 0)
         is_eof_ = true;
     else if (num_of_bytes == -1)
-        throw std::runtime_error("System I/O call error: " +
+        throw std::runtime_error("System input call error: " +
                                  std::string(std::strerror(errno)));
 
     return *this;
@@ -41,7 +41,7 @@ IStream& IStream::getline(std::string& str)
 
     while(!(num_of_bytes < sizeof(buf) || is_endl))
     {
-        num_of_bytes = read(fd_, buf, sizeof(buf));
+        num_of_bytes = ::read(fd_, buf, sizeof(buf));
 
         if (num_of_bytes <= 0)
             break;
@@ -56,9 +56,31 @@ IStream& IStream::getline(std::string& str)
     if (num_of_bytes == 0)
         is_eof_ = true;
     else if (num_of_bytes == -1)
-        throw std::runtime_error("System I/O call error: " +
+        throw std::runtime_error("System input call error: " +
                                  std::string(std::strerror(errno)));
 
+    return *this;
+}
+
+// ===========OStream===========
+
+OStream& OStream::put(char c)
+{
+    ssize_t num_of_bytes {::write(fd_, &c, 1)};
+
+    if (num_of_bytes == -1)
+        throw std::runtime_error("System output call error: " +
+                                 std::string(std::strerror(errno)));
+    return *this;
+}
+
+OStream& OStream::write(const std::string& str)
+{
+    ssize_t num_of_bytes {::write(fd_, str.data(), str.size())};
+
+    if (num_of_bytes == -1)
+        throw std::runtime_error("System output call error: " +
+                                 std::string(std::strerror(errno)));
     return *this;
 }
 
